@@ -30,9 +30,10 @@ public class RegisterManager extends RequestManager implements IRegister{
     @Override
     public void register(String user_id, String user_pwd) {
         try {
-            PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("SELECT * from user where user_id=?&&user_pwd=?");
+            PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("SELECT * from user where user_id=?");
+            preparedStatement.setString(1,user_id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println("成功请求");
+            System.out.println("成功查询是否存在此用户");
             if (resultSet.next()){
                 if (this.mCallback!=null){
                     this.mCallback.error("用户名存在");

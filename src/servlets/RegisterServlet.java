@@ -1,5 +1,6 @@
 package servlets;
 
+import base.Constant;
 import model.IRequestCallback;
 import model.register.RegisterManager;
 import utils.ChineseUtil;
@@ -21,16 +22,12 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("RegisterServlet.doPost()");
-        resp.setContentType("text/html;charset='utf-8'");
+        resp.setContentType("text/html;charset=utf-8");
         PrintWriter out = resp.getWriter();
-        String user_name  = ChineseUtil.adjustMessCode(req.getParameter("username"));
-        String user_pwd = req.getParameter("pwd");
+        out.println("<p>开始注册</p>");
+
+        String user_name  = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
+        String user_pwd = req.getParameter(Constant.USER_PWD);
         //设置注册回调事件
         RegisterManager.getInstance().setRequestCallback(new IRequestCallback() {
             @Override
@@ -48,5 +45,10 @@ public class RegisterServlet extends HttpServlet {
         });
         ///开始注册
         RegisterManager.getInstance().register(user_name,user_pwd);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doGet(req, resp);
     }
 }
