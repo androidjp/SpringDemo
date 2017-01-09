@@ -1,0 +1,12 @@
+body{
+    text-align:center;
+    background: #ffa4b5;
+}
+
+.input_bg{
+    border: dashed white;
+    border-width: 4px;
+    border-radius: 10%;
+    background: #ffffff;
+}
+
