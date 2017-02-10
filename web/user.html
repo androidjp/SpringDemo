@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringDemo--User管理</title>
+</head>
+<body>
+<form action="servlets/UserServlet" method="post">
+
+    要修改的用户ID：<input class="input_bg" type="text" name="user_name" id="ed_username" >
+    </br>密码：<input class="input_bg" type="password" name="user_pwd" id="ed_pwd">
+    </br>性别：<input class="input_bg" type="radio" name="sex" value="0">男 <input class="input_bg" type="radio" name="sex" value="1">女
+    </br>年龄：<input class="input_bg" type="number" name="age" id="ed_age">
+    </br>用户名：<input class="input_bg" type="text" name="user_name" id="ed_user_name">
+    </br>用户图片：<input class="input_bg" type="text" name="user_pic" id="ed_user_pic">
+    </br>邮箱：<input class="input_bg" type="email" name="email" id="ed_email">
+    </br>手机号：<input class="input_bg" type="tel" name="phone" id="ed_phone">
+    </br><input type="submit" value="修改"> <input type="reset" value="重置">
+</form>
+</body>
+</html>
