@@ -1,7 +1,7 @@
 package servlets;
 
 import base.Constant;
-import model.cookie.CookieManager;
+import model.impl.cookie.CookieManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,17 +1,22 @@
 package pojo;
 
 /**
- * User
- * Created by junpeng.wu on 1/6/2017.
+ * 用户 POJO类
+ * Created by androidjp on 2016/12/27.
  */
-public class User {
+public class User implements Cloneable{
+
+//    @PrimaryKey
     private String user_id;
     private String user_name;
-    private String usr_pwd;
-    private String phone;
+//    @Required
+    private String user_pwd;
     private String email;
-    private int sex;
-    private int user_kind;
+    private String phone;
+    private int sex;///0 man  1 woman
+    private String user_pic;
+    private int kind;//用户类型（保留）
+    private int age;
 
     public String getUser_id() {
         return user_id;
@@ -29,20 +34,12 @@ public class User {
         this.user_name = user_name;
     }
 
-    public String getUsr_pwd() {
-        return usr_pwd;
+    public String getUser_pwd() {
+        return user_pwd;
     }
 
-    public void setUsr_pwd(String usr_pwd) {
-        this.usr_pwd = usr_pwd;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUser_pwd(String user_pwd) {
+        this.user_pwd = user_pwd;
     }
 
     public String getEmail() {
@@ -53,6 +50,14 @@ public class User {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public int getSex() {
         return sex;
     }
@@ -61,11 +66,49 @@ public class User {
         this.sex = sex;
     }
 
-    public int getUser_kind() {
-        return user_kind;
+    public String getUser_pic() {
+
+        return user_pic;
     }
 
-    public void setUser_kind(int user_kind) {
-        this.user_kind = user_kind;
+    public void setUser_pic(String user_pic) {
+        this.user_pic = user_pic;
+    }
+
+    public int getKind() {
+        return kind;
+    }
+
+    public void setKind(int kind) {
+        this.kind = kind;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public User clone() throws CloneNotSupportedException {
+        return (User) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\"user_id\":\"").append(user_id)
+                .append("\",\"user_pwd\":\"").append(user_pwd)
+                .append("\",\"user_name\":\"").append(user_name)
+                .append("\",\"email\":\"").append(email)
+                .append("\",\"phone\":\"").append(phone)
+                .append("\",\"user_pic\":\"").append(user_pic)
+                .append("\",\"age\":").append(age)
+                .append(",\"sex\":").append(sex)
+                .append(",\"kind\":").append(kind)
+                .append("}");
+        return sb.toString();
     }
 }

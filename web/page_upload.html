@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>理赔助理 -- 上传页</title>
+</head>
+<body>
+
+<h1>要上传什么呢：</h1>
+</table>
+<fieldset>
+
+    <legend>你好！</legend>
+
+    <table border="1" cellpadding="6" cellspacing="6">
+        <caption>理赔助理 -- 信息上传界面</caption>
+        <!--setting style of columns-->
+        <colgroup align="center">
+            <col span="2" style="background-color: aliceblue">
+            <col style="background-color: blue">
+        </colgroup>
+
+
+        <thead style="background-color: #FFA4B5">
+        <tr>
+            <th>上传数据类型</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody style="background-color: aquamarine">
+        <tr>
+            <td>文件</td>
+            <td>
+
+                <form action="servlets/UploadServlet" method="post" enctype="multipart/form-data">
+                    <input type="file" name="upload_file">
+                    <br><input type="submit" value="上传">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
+
+</body>
+</html>

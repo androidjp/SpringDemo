@@ -15,6 +15,7 @@ public class ChineseUtil {
      */
     public static String adjustMessCode(String chinese){
         try {
+            System.out.println("ChineseUtil.adjustMessCode("+chinese+")");
             return new String(chinese.getBytes("ISO8859-1"),"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

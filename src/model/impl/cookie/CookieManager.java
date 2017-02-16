@@ -1,4 +1,4 @@
-package model.cookie;
+package model.impl.cookie;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

@@ -24,6 +24,7 @@
       <li><a href="page_login.jsp">登录</a></li>
       <li><a href="page_register.jsp">注册</a></li>
       <li><a href="servlets/ErrorHandler">404错误页面</a></li>
+      <li><a href="page_upload.html">上传文件</a></li>
     </ul>
   </body>
 </html>

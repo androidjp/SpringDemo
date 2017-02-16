@@ -3,7 +3,7 @@ package model;
 /**
  * Created by junpeng.wu on 1/9/2017.
  */
-public interface IRequestCallback {
-    public void finish();
+public interface IRequestCallback<T> {
+    public void finish(T value);
     public void error(String msg);
 }

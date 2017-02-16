@@ -5,5 +5,5 @@ package model;
  * Created by junpeng.wu on 1/9/2017.
  */
 public interface ILogin {
-    void login(String user_name, String password);
+    void login(String user_id, String password);
 }

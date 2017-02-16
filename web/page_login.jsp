@@ -14,7 +14,7 @@
 </head>
 <body style="background:#FFA4B5">
 <form action="servlets/LoginServlet" method="post">
-    用户名：<input class="input_bg" type="text" name="user_name" id="ed_username" >
+    用户名：<input class="input_bg" type="text" name="user_id" id="ed_user_id">
     </br>密码：<input class="input_bg" type="password" name="user_pwd" id="ed_pwd">
     </br><input type="submit" value="登录"> <input type="reset" value="重置">
 </form>
