@@ -3,6 +3,7 @@ package model.impl.register;
 import model.IRegister;
 import model.RequestManager;
 import model.impl.connection_pool.ConPool;
+import utils.StringRandomUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,12 +45,13 @@ public class RegisterManager extends RequestManager<String> implements IRegister
                     }else{
                         //注册
                         PreparedStatement preparedStatement2 = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("INSERT INTO user(user_id,user_name,user_pwd,phone,age,sex) VALUES(?,?,?,?,?,?)");
-                        preparedStatement2.setString(1, phone);
+                        preparedStatement2.setString(1, StringRandomUtil.getStringRandom(20));
                         preparedStatement2.setString(2, (user_name==null)?phone:user_name);
                         preparedStatement2.setString(3, user_pwd);
                         preparedStatement2.setString(4, phone);
                         preparedStatement2.setInt(5, age);
                         preparedStatement2.setInt(6, sex);
+                        preparedStatement2.execute();
                         System.out.println("成功插入数据库");
                         if (this.mCallback!=null)
                             this.mCallback.finish("成功");
@@ -69,7 +71,7 @@ public class RegisterManager extends RequestManager<String> implements IRegister
                     }else{
                         //注册
                         PreparedStatement preparedStatement2 = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("INSERT INTO user(user_id,user_name,user_pwd,email,age,sex) VALUES(?,?,?,?,?,?)");
-                        preparedStatement2.setString(1, email);
+                        preparedStatement2.setString(1, StringRandomUtil.getStringRandom(20));
                         preparedStatement2.setString(2, (user_name==null)?email:user_name);
                         preparedStatement2.setString(3, user_pwd);
                         preparedStatement2.setString(4, email);
@@ -97,7 +99,7 @@ public class RegisterManager extends RequestManager<String> implements IRegister
                 }else{
                     //注册
                     PreparedStatement preparedStatement2 = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("INSERT INTO user(user_id,user_name,user_pwd,email,phone,age,sex) VALUES(?,?,?,?,?,?,?)");
-                    preparedStatement2.setString(1, email);
+                    preparedStatement2.setString(1, StringRandomUtil.getStringRandom(20));
                     preparedStatement2.setString(2, (user_name==null)?email:user_name);
                     preparedStatement2.setString(3, user_pwd);
                     preparedStatement2.setString(4, email);

@@ -3,7 +3,8 @@ package model.user;
 import base.Constant;
 import model.IUserManagerment;
 import model.RequestManager;
-import model.connection_pool.ConPool;
+import model.impl.connection_pool.ConPool;
+import pojo.User;
 
 import java.io.File;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  * User管理实现类
  * Created by junpeng.wu on 2/10/2017.
  */
-public class UserManager extends RequestManager implements IUserManagerment {
+public class UserManager extends RequestManager<User> implements IUserManagerment {
 
     private UserManager() {
 
@@ -33,8 +34,9 @@ public class UserManager extends RequestManager implements IUserManagerment {
             preparedStatement.setString(1, userName);
             preparedStatement.setString(2, userId);
             preparedStatement.execute();
+
             if (mCallback != null)
-                mCallback.finish();
+                mCallback.finish(getUserMsgFromDB(userId));
         } catch (SQLException e) {
             if (mCallback != null)
                 mCallback.error("修改用户信息异常！");
@@ -50,7 +52,7 @@ public class UserManager extends RequestManager implements IUserManagerment {
             preparedStatement.setString(1, userPwd);
             preparedStatement.setString(2, userId);
             if (mCallback != null)
-                mCallback.finish();
+                mCallback.finish(getUserMsgFromDB(userId));
         } catch (SQLException e) {
             if (mCallback != null)
                 mCallback.error("");
@@ -94,7 +96,7 @@ public class UserManager extends RequestManager implements IUserManagerment {
             }
             if (preparedStatement.execute()) {
                 if (mCallback != null)
-                    mCallback.finish();
+                    mCallback.finish(getUserMsgFromDB(userId));
             } else {
                 if (mCallback != null)
                     mCallback.error("修改失败");
@@ -142,7 +144,7 @@ public class UserManager extends RequestManager implements IUserManagerment {
             }
             if (preparedStatement.execute()) {
                 if (mCallback != null)
-                    mCallback.finish();
+                    mCallback.finish(getUserMsgFromDB(userId));
             } else {
                 if (mCallback != null)
                     mCallback.error("修改失败");
@@ -167,7 +169,7 @@ public class UserManager extends RequestManager implements IUserManagerment {
             preparedStatement.setInt(1, sex);
             preparedStatement.setString(2, userId);
             if (mCallback != null)
-                mCallback.finish();
+                mCallback.finish(getUserMsgFromDB(userId));
         } catch (SQLException e) {
             if (mCallback != null)
                 mCallback.error("");
@@ -182,8 +184,9 @@ public class UserManager extends RequestManager implements IUserManagerment {
                     .getCon().getConnection().prepareStatement("UPDATE USER SET age = ? where user_id= ?");
             preparedStatement.setInt(1, age);
             preparedStatement.setString(2, userId);
-            if (mCallback != null)
-                mCallback.finish();
+            if (mCallback != null){
+                mCallback.finish(getUserMsgFromDB(userId));
+            }
         } catch (SQLException e) {
             if (mCallback != null)
                 mCallback.error("");
@@ -203,7 +206,7 @@ public class UserManager extends RequestManager implements IUserManagerment {
                     .getCon().getConnection().prepareStatement(sql);
             preparedStatement.execute();
             if (mCallback != null)
-                mCallback.finish();
+                mCallback.finish(null);
         } catch (SQLException e) {
             if (mCallback != null)
                 mCallback.error("");
@@ -224,7 +227,7 @@ public class UserManager extends RequestManager implements IUserManagerment {
             ResultSet resultSet = preparedStatement.executeQuery();
             ///TODO:获取查询的结果
             if (mCallback != null)
-                mCallback.finish();
+                mCallback.finish(null);
         } catch (SQLException e) {
             if (mCallback != null)
                 mCallback.error("");
@@ -235,5 +238,34 @@ public class UserManager extends RequestManager implements IUserManagerment {
     private static final class SingletonHolder {
         private static final UserManager sInstance = new UserManager();
     }
+
+
+    private User getUserMsgFromDB(String userId){
+
+        PreparedStatement preparedStatement = null;
+        User user = null;
+        try {
+            preparedStatement = ConPool.getInstance("traffic_helper")
+                    .getCon().getConnection().prepareStatement("SELECT * from user where user_id=?");
+            preparedStatement.setString(1,userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                user.setUser_id(userId);
+                user.setUser_name(resultSet.getString(Constant.USER_NAME));
+                user.setUser_pwd(resultSet.getString(Constant.USER_PWD));
+                user.setUser_pic(resultSet.getString(Constant.USER_PIC));
+                user.setAge(Integer.valueOf(resultSet.getString(Constant.AGE)));
+                user.setSex(Integer.valueOf(resultSet.getString(Constant.SEX)));
+                user.setEmail(resultSet.getString(Constant.EMAIL));
+                user.setPhone(resultSet.getString(Constant.PHONE));
+            }
+            return user;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 
 }

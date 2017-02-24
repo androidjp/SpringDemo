@@ -30,31 +30,42 @@ public class RegisterServlet extends HttpServlet {
 
         out.println("<p>开始注册</p>");
         System.out.println("RegisterServlet.doGet() start...");
-        String user_name  = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
+
+        System.out.println("注册时，获取user_name，计算其长度："+ req.getParameter(Constant.USER_NAME).getBytes().length);
+
+        String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
+        System.out.println("将user_name转utf-8后，计算器长度："+ user_name.getBytes().length);
+
 //        String user_name = req.getParameter(Constant.USER_NAME);
         String user_pwd = req.getParameter(Constant.USER_PWD);
         String email = req.getParameter(Constant.EMAIL);
-        if (email!=null && email.length()==0)email= null;
+        if (email != null && email.length() == 0) email = null;
         String phone = req.getParameter(Constant.PHONE);
-        if (phone!=null && phone.length()==0)phone= null;
+        if (phone != null && phone.length() == 0) phone = null;
         String sexStr = req.getParameter(Constant.SEX);
-        String ageStr = req.getParameter(Constant.USER_AGE);
+        String ageStr = req.getParameter(Constant.AGE);
         int age = Integer.valueOf(ageStr);
         int sex = Integer.valueOf(sexStr);
-        StringBuilder sb =new StringBuilder();
-        System.out.println("user_name="+user_name);
-        System.out.println("user_pwd="+user_pwd);
-        System.out.println("email="+email);
-        System.out.println("phone="+phone);
-        System.out.println("age="+age);
-        System.out.println("sex="+(sex==0?"男":"女"));
+        StringBuilder sb = new StringBuilder();
+        if (user_name == null || user_name.length() == 0) {
+            if (email != null && email.length() > 0)
+                user_name = email;
+            else
+                user_name = phone;
+        }
+        System.out.println("user_name=" + user_name);
+        System.out.println("user_pwd=" + user_pwd);
+        System.out.println("email=" + email);
+        System.out.println("phone=" + phone);
+        System.out.println("age=" + age);
+        System.out.println("sex=" + (sex == 0 ? "男" : "女"));
 
         sb.append("<ul><li>").append("user_name=").append(user_name).append("</li>")
                 .append("<li>").append("user_pwd=").append(user_pwd).append("</li>")
                 .append("<li>").append("email=").append(email).append("</li>")
                 .append("<li>").append("phone=").append(phone).append("</li>")
                 .append("<li>").append("age=").append(age).append("</li>")
-                .append("<li>").append("sex=").append((sex==0?"男":"女")).append("</li></ul>");
+                .append("<li>").append("sex=").append((sex == 0 ? "男" : "女")).append("</li></ul>");
 
         out.println(sb.toString());
 
@@ -76,7 +87,8 @@ public class RegisterServlet extends HttpServlet {
             }
         });
         ///开始注册
-        RegisterManager.getInstance().register(user_name,user_pwd,email,phone,age,sex);
+        System.out.println("准备RegisterManager进行注册。。");
+        RegisterManager.getInstance().register(user_name, user_pwd, email, phone, age, sex);
     }
 
     @Override

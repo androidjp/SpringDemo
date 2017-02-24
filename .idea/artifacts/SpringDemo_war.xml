@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SpringDemo:war">
+    <output-path>/Library/Tomcat/apache-tomcat-8.5.11/webapps</output-path>
+    <root id="archive" name="SpringDemo_war.war">
+      <element id="artifact" artifact-name="SpringDemo:war exploded" />
+    </root>
+  </artifact>
+</component>

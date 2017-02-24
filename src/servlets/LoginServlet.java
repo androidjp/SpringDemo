@@ -4,6 +4,7 @@ import base.Constant;
 import model.IRequestCallback;
 import model.impl.cookie.CookieManager;
 import model.impl.login.LoginManager;
+import pojo.User;
 import utils.ChineseUtil;
 
 import javax.servlet.ServletException;
@@ -37,27 +38,64 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<h1 style=\'text-align:center\'>" + message + "</h1></br>");
         // 处理中文
-        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
-//        String id = req.getParameter(Constant.USER_ID);
+//        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
+        String id = req.getParameter(Constant.USER_ID);
 //        String name = req.getParameter("username");
         String password = req.getParameter(Constant.USER_PWD);
 
         ///访问数据库
-        LoginManager.getInstance().setRequestCallback(new IRequestCallback<String>() {
+        LoginManager.getInstance().setRequestCallback(new IRequestCallback<User>() {
             @Override
-            public void finish(String value) {
-                out.println("<p style='font-weight:bold'>成功登录！！返回的user信息：</p>");
-                out.println("<p style='font-weight:bold'>");
-                out.println(value);
-                out.println("</p>");
+            public void finish(User value) {
+//                out.println("<p style='font-weight:bold'>成功登录！！返回的user信息：</p>");
+//                out.println("<p style='font-weight:bold'>");
+//                out.println(value);
+//                out.println("</p>");
                 ///设置Cookie数据
-                Cookie userNameCookie = new Cookie(Constant.USER_ID, CookieManager.getInstance().getChineseCookie(id));
-                Cookie passwordCookie = new Cookie(Constant.USER_PWD, CookieManager.getInstance().getChineseCookie(password));
-                userNameCookie.setMaxAge(10*60);//10min
-                passwordCookie.setMaxAge(10*60);//10min
+//                Cookie userNameCookie = new Cookie(Constant.USER_ID, CookieManager.getInstance().getChineseCookie(id));
+//                Cookie passwordCookie = new Cookie(Constant.USER_PWD, password);
+//                Cookie emailCookie = new Cookie(Constant.USER_PWD, value.getEmail());
+//                Cookie phoneCookie = new Cookie(Constant.USER_PWD, value.getPhone());
+//                Cookie ageCookie = new Cookie(Constant.USER_PWD, value.getAge()+"");
+//                Cookie sexCookie = new Cookie(Constant.USER_PWD, value.getSex()+"");
+//                Cookie userPicCookie = new Cookie(Constant.USER_PIC, value.getUser_pic());
+//                Cookie userIDCookie = new Cookie(Constant.USER_ID, value.getUser_id());
+//
+//                userNameCookie.setMaxAge(10*60);//10min
+//                passwordCookie.setMaxAge(10*60);//10min
+//                emailCookie.setMaxAge(10*60);
+//                phoneCookie.setMaxAge(10*60);
+//                ageCookie.setMaxAge(10*60);
+//                sexCookie.setMaxAge(10*60);
+//                userPicCookie.setMaxAge(10*60);
+//                userIDCookie.setMaxAge(10*60);
+//
+//                resp.addCookie(userNameCookie);
+//                resp.addCookie(passwordCookie);
+//                resp.addCookie(emailCookie);
+//                resp.addCookie(phoneCookie);
+//                resp.addCookie(sexCookie);
+//                resp.addCookie(ageCookie);
+//                resp.addCookie(userIDCookie);
+//                resp.addCookie(userPicCookie);
 
-                resp.addCookie(userNameCookie);
-                resp.addCookie(passwordCookie);
+                req.setAttribute("user", value);
+                try {
+                    req.getRequestDispatcher("../user.jsp").forward(req,resp);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                ///TODO: 准备重定向
+                //设置重定向的新位置
+//                String site = new String("/SpringDemo/user.jsp");
+//                resp.setStatus(resp.SC_MOVED_TEMPORARILY);
+//                resp.setHeader("Location",site);
+                //以上的setStatus 和 setHeader 相当于 resp.sendDirect("URL"); 重定向作用：将重定向的网页的状态码与网页位置发送回浏览器
             }
 
             @Override

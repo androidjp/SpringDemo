@@ -1,5 +1,8 @@
 package model;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
+
 /**
  * Created by junpeng.wu on 1/9/2017.
  */

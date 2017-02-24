@@ -3,6 +3,7 @@ package servlets;
 import base.Constant;
 import model.IRequestCallback;
 import model.user.UserManager;
+import pojo.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,9 @@ import java.io.IOException;
 @WebServlet("/servlets/UserServlet")
 public class UserServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+        System.out.println("UserServlet 开始跑了");
+
         resp.setContentType("text/html;charset=UTF-8");
         String user_id = req.getParameter(Constant.USER_ID);
         String user_name = req.getParameter(Constant.USER_NAME);
@@ -30,10 +33,20 @@ public class UserServlet extends HttpServlet {
         String age = req.getParameter(Constant.AGE);
         String user_pic = req.getParameter(Constant.USER_PIC);
 
-        UserManager.getInstance().setRequestCallback(new IRequestCallback() {
+        UserManager.getInstance().setRequestCallback(new IRequestCallback<User>() {
+
             @Override
-            public void finish() {
+            public void finish(User value) {
                 System.out.println("成功修改用户信息~");
+                ///TODO: 更新User信息，并重新回到这个界面
+                req.setAttribute("user", value);
+                try {
+                    req.getRequestDispatcher("../user.jsp").forward(req,resp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -58,7 +71,6 @@ public class UserServlet extends HttpServlet {
         }else if (!Constant.isEmpty(user_pic)){
 //            UserManager.getInstance().updateUserPic(user_id,user_pic);
         }
-
     }
 
     @Override

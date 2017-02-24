@@ -14,6 +14,8 @@ public class ChineseUtil {
      * @return 调整后的中文
      */
     public static String adjustMessCode(String chinese){
+        if (chinese==null || chinese.length() ==0)
+            return null;
         try {
             System.out.println("ChineseUtil.adjustMessCode("+chinese+")");
             return new String(chinese.getBytes("ISO8859-1"),"UTF-8");
