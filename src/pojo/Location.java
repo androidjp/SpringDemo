@@ -6,8 +6,8 @@ package pojo;
  * Created by androidjp on 2017/1/4.
  */
 public class Location{
-//    @PrimaryKey
-    private String location_id;
+    //    @PrimaryKey
+    private int location_id  = -1;
     public String city;
     public String province;
     public String street;
@@ -22,11 +22,11 @@ public class Location{
         this.longitude = longitude;
     }
 
-    public String getLocation_id() {
+    public int getLocation_id() {
         return location_id;
     }
 
-    public void setLocation_id(String location_id) {
+    public void setLocation_id(int location_id) {
         this.location_id = location_id;
     }
 }

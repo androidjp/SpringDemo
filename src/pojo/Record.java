@@ -1,5 +1,9 @@
 package pojo;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 /**
  * 理赔记录：
  * <p>
@@ -7,14 +11,14 @@ package pojo;
  */
 public class Record implements Cloneable {
 
-//    @PrimaryKey
-    private String record_id;//（主键）
-//    @Required
+    //    @PrimaryKey
+    private int record_id =  -1;//（主键）
+    //    @Required
     private String user_id;///用户ID（外键）
-    public String location_id;///定位（外键）
-//    @Ignore
+    public int location_id = -1;///定位（外键）
+    //    @Ignore
     public Location location;//实际定位信息
-//    @Required
+    //    @Required
     public long record_time;
     public int hurt_level;
     public long salary;//月薪
@@ -27,13 +31,14 @@ public class Record implements Cloneable {
     public int hospital_days;
     public int tardy_days;///误工天数
     public int nutrition_days;//营养期
-    private String result_id;///结果（外键）
-//    @Ignore
+    private int result_id = -1;///结果（外键）
+    //    @Ignore
     private RecordRes result;///结果
 //    private RealmList<RelativeItemMsg> relative_msg_list;
 
+
     public RecordRes getResult() {
-        return (result_id == null) ? null : result;
+        return (result_id == -1) ? null : result;
     }
 
     public void setResult(RecordRes result) {
@@ -41,28 +46,23 @@ public class Record implements Cloneable {
         this.result_id = this.result.getResult_id();
     }
 
-    public void setRecord_id(String record_id) {
-        this.record_id = record_id;
-    }
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    public void setResult_id(String result_id) {
-        this.result_id = result_id;
-    }
 
     public String getUser_id() {
         return user_id;
     }
 
-    public String getRecord_id() {
+
+    public int getRecord_id() {
         return record_id;
     }
 
-    public String getResult_id() {
-        return result_id;
+    public void setRecord_id(int record_id) {
+        this.record_id = record_id;
     }
 
     public Location getLocation() {
@@ -93,11 +93,11 @@ public class Record implements Cloneable {
      * @param record 传来的记录数据
      */
     public void copyData(Record record) {
-        if (record.result_id != null && record.result != null) {
+        if (record.result_id != -1 && record.result != null) {
             this.result = record.result;
             this.result_id = record.result.getResult_id();
         }
-        if (!(record.getLocation() == null || record.location_id == null)) {
+        if (!(record.getLocation() == null || record.location_id == -1)) {
             this.setLocation(record.location);
             this.location_id = this.location.getLocation_id();
         }
@@ -118,5 +118,24 @@ public class Record implements Cloneable {
 //        this.relative_msg_list.clear();
 //        if (record.relative_msg_list != null)
 //            this.relative_msg_list.addAll(record.relative_msg_list);
+    }
+
+    public Map<String ,Object> getFieldMap(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_id", user_id);
+        map.put("location", location);
+        map.put("record_time", record_time);
+        map.put("hurt_level", hurt_level);
+        map.put("salary", salary);
+        map.put("relatives_count",relatives_count);
+        map.put("has_spouse",has_spouse);
+        map.put("id_type",id_type);
+        map.put("responsibility",responsibility);
+        map.put("driving_tools",driving_tools);
+        map.put("medical_free",medical_free);
+        map.put("hospital_days",hospital_days);
+        map.put("tardy_days",tardy_days);
+        map.put("nutrition_days",nutrition_days);
+        return map;
     }
 }

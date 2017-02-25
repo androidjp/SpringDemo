@@ -7,10 +7,10 @@ package pojo;
  * Created by androidjp on 2017/1/17.
  */
 public class RelativeItemMsg {
-//    @PrimaryKey
-    private String relativeItemMsg_id;
-//    @Required
-    private String record_id;
+    //    @PrimaryKey
+    private int relativeItemMsg_id = -1;
+    //    @Required
+    private int record_id = -1;
     private int relation;
     private int age;
 
@@ -19,30 +19,7 @@ public class RelativeItemMsg {
         this.age = age;
     }
 
-    public String getRelativeItemMsg_id() {
-        return relativeItemMsg_id;
-    }
 
-    public void setRelativeItemMsg_id(String relativeItemMsg_id) {
-        this.relativeItemMsg_id = relativeItemMsg_id;
-    }
-
-    public String getRecord_id() {
-        return record_id;
-    }
-
-    public void setRecord_id(String record_id) {
-        this.record_id = record_id;
-    }
-
-
-    public int getRelation() {
-        return relation;
-    }
-
-    public void setRelation(int relation) {
-        this.relation = relation;
-    }
 
     public int getAge() {
         return age;
@@ -50,5 +27,29 @@ public class RelativeItemMsg {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getRelativeItemMsg_id() {
+        return relativeItemMsg_id;
+    }
+
+    public void setRelativeItemMsg_id(int relativeItemMsg_id) {
+        this.relativeItemMsg_id = relativeItemMsg_id;
+    }
+
+    public int getRecord_id() {
+        return record_id;
+    }
+
+    public void setRecord_id(int record_id) {
+        this.record_id = record_id;
+    }
+
+    public int getRelation() {
+        return relation;
+    }
+
+    public void setRelation(int relation) {
+        this.relation = relation;
     }
 }

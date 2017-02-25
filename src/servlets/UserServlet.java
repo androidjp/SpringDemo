@@ -33,6 +33,19 @@ public class UserServlet extends HttpServlet {
         String age = req.getParameter(Constant.AGE);
         String user_pic = req.getParameter(Constant.USER_PIC);
 
+        StringBuilder sb = new StringBuilder();
+        sb.append(user_id).append(" , \r\n")
+                .append(user_name).append(" , \r\n")
+                .append(user_pwd).append(" , \r\n")
+                .append(email).append(" , \r\n")
+                .append(phone).append(" , \r\n")
+                .append(sex).append(" , \r\n")
+                .append(age).append(" , \r\n")
+                .append(user_pic);
+
+        System.out.println(sb.toString());
+        System.out.println(user_id == null);
+
         UserManager.getInstance().setRequestCallback(new IRequestCallback<User>() {
 
             @Override
@@ -41,7 +54,7 @@ public class UserServlet extends HttpServlet {
                 ///TODO: 更新User信息，并重新回到这个界面
                 req.setAttribute("user", value);
                 try {
-                    req.getRequestDispatcher("../user.jsp").forward(req,resp);
+                    req.getRequestDispatcher("../user.jsp").forward(req, resp);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ServletException e) {
@@ -54,21 +67,22 @@ public class UserServlet extends HttpServlet {
                 System.out.println(msg);
             }
         });
+        ////
         if (Constant.isEmpty(user_id))
             return;
-        if (!Constant.isEmpty(user_name)){
+        if (!Constant.isEmpty(user_name)) {
             UserManager.getInstance().updateUserName(user_id, user_name);
-        }else if (!Constant.isEmpty(user_pwd)){
+        } else if (!Constant.isEmpty(user_pwd)) {
             UserManager.getInstance().updateUserPwd(user_id, user_pwd);
-        }else if (!Constant.isEmpty(email)){
-            UserManager.getInstance().updateEmail(user_id,email);
-        }else if (!Constant.isEmpty(phone)){
-            UserManager.getInstance().updatePhone(user_id,phone);
-        }else if (!Constant.isEmpty(sex)){
-            UserManager.getInstance().updateSex(user_id,Integer.valueOf(sex));
-        }else if (!Constant.isEmpty(age)){
-            UserManager.getInstance().updateAge(user_id,Integer.valueOf(age));
-        }else if (!Constant.isEmpty(user_pic)){
+        } else if (!Constant.isEmpty(email)) {
+            UserManager.getInstance().updateEmail(user_id, email);
+        } else if (!Constant.isEmpty(phone)) {
+            UserManager.getInstance().updatePhone(user_id, phone);
+        } else if (!Constant.isEmpty(sex)) {
+            UserManager.getInstance().updateSex(user_id, Integer.valueOf(sex));
+        } else if (!Constant.isEmpty(age)) {
+            UserManager.getInstance().updateAge(user_id, Integer.valueOf(age));
+        } else if (!Constant.isEmpty(user_pic)) {
 //            UserManager.getInstance().updateUserPic(user_id,user_pic);
         }
     }

@@ -90,7 +90,7 @@
 
 <form action="/SpringDemo/servlets/UserServlet" method="post">
 
-    要修改的用户ID：<%=userID%>
+    要修改的用户ID：<input type="text" name="user_id" value="<%=userID%>" readonly>
     </br>密码：<input class="input_bg" type="password" name="user_pwd" id="ed_pwd">
     </br>性别：<input class="input_bg" type="radio" name="sex" value="0">男 <input class="input_bg" type="radio" name="sex"
                                                                                value="1">女

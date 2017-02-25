@@ -9,8 +9,8 @@ import java.util.Map;
  */
 public class RecordRes {
 
-//    @PrimaryKey
-    private String result_id;//主键
+    //    @PrimaryKey
+    private int result_id = -1;//主键
     public float money_pay;///总花费（两位小数）
     public float money_hurt;//伤残赔偿金
     public float money_heart;//精神损失费
@@ -28,11 +28,8 @@ public class RecordRes {
     public Map<String, String> money_nutrition_info;
     public Map<String, String> money_hospital_info;
 
-    public String getResult_id() {
-        return result_id;
-    }
 
-    public void setResult_id(String result_id) {
-        this.result_id = result_id;
+    public int getResult_id() {
+        return result_id;
     }
 }
