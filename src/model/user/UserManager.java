@@ -1,7 +1,7 @@
 package model.user;
 
 import base.Constant;
-import model.IUserManagerment;
+import model.IUserManagement;
 import model.RequestManager;
 import model.impl.connection_pool.ConPool;
 import pojo.User;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * User管理实现类
  * Created by junpeng.wu on 2/10/2017.
  */
-public class UserManager extends RequestManager<User> implements IUserManagerment {
+public class UserManager extends RequestManager<User> implements IUserManagement {
 
     private UserManager() {
 

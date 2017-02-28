@@ -1,15 +1,21 @@
 package pojo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import jp.org.json.JSONObject;
+
+import java.io.Serializable;
+
 /**
  * 用户 POJO类
  * Created by androidjp on 2016/12/27.
  */
-public class User implements Cloneable{
+public class User implements Cloneable, Serializable {
 
-//    @PrimaryKey
+    //    @PrimaryKey
     private String user_id;
     private String user_name;
-//    @Required
+    //    @Required
     private String user_pwd;
     private String email;
     private String phone;
@@ -98,17 +104,34 @@ public class User implements Cloneable{
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"user_id\":\"").append(user_id)
-                .append("\",\"user_pwd\":\"").append(user_pwd)
-                .append("\",\"user_name\":\"").append(user_name)
-                .append("\",\"email\":\"").append(email)
-                .append("\",\"phone\":\"").append(phone)
-                .append("\",\"user_pic\":\"").append(user_pic)
-                .append("\",\"age\":").append(age)
-                .append(",\"sex\":").append(sex)
-                .append(",\"kind\":").append(kind)
-                .append("}");
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("{\"user_id\":\"").append(user_id)
+//                .append("\",\"user_pwd\":\"").append(user_pwd)
+//                .append("\",\"user_name\":\"").append(user_name)
+//                .append("\",\"email\":\"").append(email)
+//                .append("\",\"phone\":\"").append(phone)
+//                .append("\",\"user_pic\":\"").append(user_pic)
+//                .append("\",\"age\":").append(age)
+//                .append(",\"sex\":").append(sex)
+//                .append(",\"kind\":").append(kind)
+//                .append("}");
+//        return sb.toString();
+        return this.toJsonString();
+    }
+
+    public String toJsonString() {
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("user_id", user_id);
+//        jsonObject.put("user_pwd", user_pwd);
+//        jsonObject.put("email", email);
+//        jsonObject.put("phone", phone);
+//        jsonObject.put("user_pic", user_pic);
+//        jsonObject.put("age", age);
+//        jsonObject.put("sex", sex);
+//        jsonObject.put("kind", kind);
+//        return jsonObject.toString();
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(this);
+        return jsonStr;
     }
 }

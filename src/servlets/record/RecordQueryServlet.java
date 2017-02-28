@@ -17,14 +17,23 @@ public class RecordQueryServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = resp.getWriter();
-        out.println("<h1 style=\'text-align:center\'>理赔记录查看ing</h1></br>");
-        
+        doJsonResponse(req, resp);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doGet(req , resp);
+    }
+
+
+
+
+    private void doJsonResponse(HttpServletRequest req, HttpServletResponse resp) {
+
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json;charset=utf-8");
+
+
     }
 }

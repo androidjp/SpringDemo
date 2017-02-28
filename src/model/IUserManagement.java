@@ -6,7 +6,7 @@ import java.io.File;
  * 用户管理类
  * Created by junpeng.wu on 2/10/2017.
  */
-public interface IUserManagerment {
+public interface IUserManagement {
     public void updateUserName(String userId, String userName);
     public void updateUserPwd(String userId,String userPwd);
     public void updateEmail(String userId, String email);

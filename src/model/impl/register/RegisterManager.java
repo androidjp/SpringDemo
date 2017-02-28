@@ -30,9 +30,10 @@ public class RegisterManager extends RequestManager<String> implements IRegister
     public void register(String user_name, String user_pwd,String email,String phone, int age, int sex) {
         try {
             System.out.println("RegisterManager.register()");
-            if ((phone==null)^(email == null)){
+            if ((phone==null)^(email==null)){
                 ///其中一个存在的
                 if (phone!=null){///只有手机号
+                    System.out.println("RegisterManager:  只有手机号");
                     PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("SELECT * from user where phone=?");
                     preparedStatement.setString(1,phone);
                     ResultSet resultSet = preparedStatement.executeQuery();
@@ -59,6 +60,7 @@ public class RegisterManager extends RequestManager<String> implements IRegister
                     }
                     preparedStatement.cancel();
                 }else{///只有邮箱
+                    System.out.println("RegisterManager:  只有邮箱");
                     PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("SELECT * from user where email=?");
                     preparedStatement.setString(1,email);
                     ResultSet resultSet = preparedStatement.executeQuery();
@@ -86,6 +88,8 @@ public class RegisterManager extends RequestManager<String> implements IRegister
                     preparedStatement.cancel();
                 }
             }else{///两者都输入了
+                System.out.println("RegisterManager:  手机号与邮箱都存在");
+
                 PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper").getCon().getConnection().prepareStatement("SELECT * from user where email=? OR phone=?");
                 preparedStatement.setString(1,email);
                 preparedStatement.setString(2,phone);

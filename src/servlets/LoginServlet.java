@@ -1,15 +1,15 @@
 package servlets;
 
 import base.Constant;
+import jp.org.json.JSONObject;
 import model.IRequestCallback;
-import model.impl.cookie.CookieManager;
 import model.impl.login.LoginManager;
 import pojo.User;
+import pojo.network.Result;
 import utils.ChineseUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +32,23 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        getHttpResponse(req, resp);
+        getJsonResponse(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ///POST 方式的登录
+        this.doGet(req, resp);
+    }
+
+
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
+
+    private void getHttpResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ///响应内容样式
         resp.setContentType("text/html;charset=UTF-8");
         //设置逻辑实现
@@ -108,15 +125,42 @@ public class LoginServlet extends HttpServlet {
         LoginManager.getInstance().login(id, password);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ///POST 方式的登录
-        this.doGet(req, resp);
+    private void getJsonResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json;charset=utf-8");
+
+        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
+        String password = req.getParameter(Constant.USER_PWD);
+        System.out.println("id 和 password分别为："+ id+","+password);
+        LoginManager.getInstance().setRequestCallback(new IRequestCallback<User>() {
+            @Override
+            public void finish(User value) {
+                if (value!=null){
+                    System.out.println("登录成功，获得的User信息："+value.toJsonString());
+                    Result<User> result = new Result<>();
+                    result.code = 200;
+                    result.msg = "success";
+                    result.data = value;
+                    System.out.println(result.toJsonString());
+
+                    try {
+                        PrintWriter out = resp.getWriter();
+                        out.print(result.toJsonString());
+//                        out.print(value.toJsonString());
+                        out.flush();
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void error(String msg) {
+                System.err.println(msg);
+            }
+        });
+        LoginManager.getInstance().login(id,password);
     }
 
-
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }
