@@ -1,4 +1,4 @@
-package model.impl.connection_pool;
+package model.connection_pool;
 
 import java.sql.Connection;
 

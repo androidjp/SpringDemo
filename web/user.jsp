@@ -30,7 +30,7 @@
 <%
     //    Cookie[] cookies  = request.getCookies();
 //    for (Cookie cookie : cookies){
-//        if (cookie.getName().compareTo(Constant.USER_NAME)==0){
+//        if (cookie.getName().compareTo(base.Constant.USER_NAME)==0){
 //            userName = cookie.getValue();
 //
 //        }else if (cookie.getName().compareTo("user_id")==0){

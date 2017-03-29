@@ -1,4 +1,4 @@
-package model.impl.connection_pool;
+package model.connection_pool;
 
 import java.sql.*;
 
@@ -19,7 +19,7 @@ public class MySqlDAO {
         String url = "jdbc:mysql://localhost:3306/"+(database==null?"":database);///连接协议 + 数据库地址+ 数据库名称
         System.out.println(url);
         String user = "root";
-        String password="110120130140";
+        String password="root";
 
         Class.forName(driverName);///加载数据库驱动，此过程会自动调用DriverManager中的registerDriver(Driver driver)方法，注册到管理器中
         Connection con = DriverManager.getConnection(url,user,password);////创建并获取连接

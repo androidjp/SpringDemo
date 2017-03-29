@@ -8,18 +8,20 @@ package pojo;
  */
 public class RelativeItemMsg {
     //    @PrimaryKey
-    private int relativeItemMsg_id = -1;
+    private String relativeItemMsg_id;
     //    @Required
-    private int record_id = -1;
+    private String  record_id;
     private int relation;
     private int age;
 
-    public RelativeItemMsg(int relation, int age) {
-        this.relation = relation;
-        this.age = age;
+
+    public String getRelativeItemMsg_id() {
+        return relativeItemMsg_id;
     }
 
-
+    public void setRelativeItemMsg_id(String relativeItemMsg_id) {
+        this.relativeItemMsg_id = relativeItemMsg_id;
+    }
 
     public int getAge() {
         return age;
@@ -29,19 +31,11 @@ public class RelativeItemMsg {
         this.age = age;
     }
 
-    public int getRelativeItemMsg_id() {
-        return relativeItemMsg_id;
-    }
-
-    public void setRelativeItemMsg_id(int relativeItemMsg_id) {
-        this.relativeItemMsg_id = relativeItemMsg_id;
-    }
-
-    public int getRecord_id() {
+    public String getRecord_id() {
         return record_id;
     }
 
-    public void setRecord_id(int record_id) {
+    public void setRecord_id(String record_id) {
         this.record_id = record_id;
     }
 
@@ -52,4 +46,6 @@ public class RelativeItemMsg {
     public void setRelation(int relation) {
         this.relation = relation;
     }
+
+
 }

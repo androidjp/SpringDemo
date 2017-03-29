@@ -18,11 +18,14 @@ public class Constant {
 
     //上传文件存放目录
     public static final String UPLOAD_DIR = "upload";
+    public static final String USER_IMG_DIR = "user_image_cache";
+
 
     //上传配置常数
     public static final int MEMORY_THRESHOLD = 1024*1024*3;//3MB
     public static final int MAX_FILE_SIZE = 1024*1024*40;//40MB
     public static final int MAX_REQUEST_SIZE = 1024*1024*50;//50MB
+
 
 
     public static boolean isEmpty(String value){

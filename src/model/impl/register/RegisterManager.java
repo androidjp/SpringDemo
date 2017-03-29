@@ -2,7 +2,7 @@ package model.impl.register;
 
 import model.IRegister;
 import model.RequestManager;
-import model.impl.connection_pool.ConPool;
+import model.connection_pool.ConPool;
 import utils.StringRandomUtil;
 
 import java.sql.PreparedStatement;

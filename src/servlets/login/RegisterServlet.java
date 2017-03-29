@@ -1,10 +1,8 @@
-package servlets;
+package servlets.login;
 
 import base.Constant;
-import jp.org.json.JSONObject;
 import model.IRequestCallback;
 import model.impl.register.RegisterManager;
-import pojo.User;
 import pojo.network.Result;
 import utils.ChineseUtil;
 
@@ -20,7 +18,7 @@ import java.io.PrintWriter;
  * 注册逻辑处理类
  * Created by junpeng.wu on 1/9/2017.
  */
-@WebServlet("/servlets/RegisterServlet")
+@WebServlet("/servlets/login/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 
 
@@ -58,7 +56,7 @@ public class RegisterServlet extends HttpServlet {
         String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
         System.out.println("将user_name转utf-8后，计算器长度：" + user_name.getBytes().length);
 
-//        String user_name = req.getParameter(Constant.USER_NAME);
+//        String user_name = req.getParameter(base.Constant.USER_NAME);
         String user_pwd = req.getParameter(Constant.USER_PWD);
         String email = req.getParameter(Constant.EMAIL);
         if (email == null || email.length() == 0) email = null;
@@ -155,7 +153,7 @@ public class RegisterServlet extends HttpServlet {
                 Result<String> result = new Result<>();
                 result.code = 200;
                 result.msg = "success";
-                result.data = "注册成功";
+                result.data = value;
                 try {
                     out = resp.getWriter();
 //                    out.append(responseJSONObject.toString());
@@ -174,6 +172,26 @@ public class RegisterServlet extends HttpServlet {
             @Override
             public void error(String msg) {
                 System.err.println(msg);
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("application/json; charset=utf-8");
+                PrintWriter out = null;
+                Result<String> result = new Result<>();
+                result.code = 400;
+                result.msg = "fail";
+                result.data = msg;
+                try {
+                    out = resp.getWriter();
+//                    out.append(responseJSONObject.toString());
+                    System.out.println("注册成功，返回的json数据为：" + result.toJsonString());
+                    out.print(result.toJsonString());
+                    out.flush();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (out != null)
+                        out.close();
+                }
             }
         });
         ///开始注册

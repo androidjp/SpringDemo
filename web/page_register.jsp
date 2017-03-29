@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/page_login.css" type="text/css">
 </head>
 <body style="background:#FFA4B5">
-<form action="servlets/RegisterServlet" method="post">
+<form action="servlets/login/RegisterServlet" method="post">
     用户名：<input class="input_bg" type="text" name="user_name" id="ed_username" >
     </br>密码：<input class="input_bg" type="password" name="user_pwd" id="ed_pwd">
     </br>邮箱：<input class="input_bg" type="email" name="email" id="ed_email">

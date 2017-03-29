@@ -1,12 +1,11 @@
-package model.user;
+package model.impl.user;
 
 import base.Constant;
 import model.IUserManagement;
 import model.RequestManager;
-import model.impl.connection_pool.ConPool;
+import model.connection_pool.ConPool;
 import pojo.User;
 
-import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,14 +15,14 @@ import java.sql.SQLException;
  * Created by junpeng.wu on 2/10/2017.
  */
 public class UserManager extends RequestManager<User> implements IUserManagement {
-
-    private UserManager() {
-
-    }
-
-    public static UserManager getInstance() {
-        return SingletonHolder.sInstance;
-    }
+//
+//    private UserManager() {
+//
+//    }
+//
+//    public static UserManager getInstance() {
+//        return SingletonHolder.sInstance;
+//    }
 
     @Override
     public void updateUserName(String userId, String userName) {
@@ -73,9 +72,9 @@ public class UserManager extends RequestManager<User> implements IUserManagement
     }
 
     @Override
-    public void updateUserPic(String userId, File fileName) {
+    public void updateUserPic(String userId, String fileName) {
         ///TODO:用户头像文件如何上传和客户端缓存
-        updateSingleValue(userId, "user_pic", fileName.getAbsolutePath());
+        updateSingleValue(userId, "user_pic", fileName);
     }
 
     @Override
@@ -89,7 +88,13 @@ public class UserManager extends RequestManager<User> implements IUserManagement
     }
 
 
-    private <T> void updateSingleValue(String userId , String key ,T value){
+    private synchronized  <T> void updateSingleValue(String userId , String key ,T value){
+        /**
+         * 整体过程：
+         * 1. 首先，将想要修改的数据，写入user数据表
+         * 2. 修改完成后，再读取一次User数据表中的数据
+         */
+
         String str = "update user set "+ key + "= ? where user_id=?";
         PreparedStatement preparedStatement = null;
         try{
@@ -152,9 +157,9 @@ public class UserManager extends RequestManager<User> implements IUserManagement
         }
     }
 
-    private static final class SingletonHolder {
-        private static final UserManager sInstance = new UserManager();
-    }
+//    private static final class SingletonHolder {
+//        private static final UserManager sInstance = new UserManager();
+//    }
 
 
     private User getUserMsgFromDB(String userId) {

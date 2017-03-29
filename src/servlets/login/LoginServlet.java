@@ -1,7 +1,6 @@
-package servlets;
+package servlets.login;
 
 import base.Constant;
-import jp.org.json.JSONObject;
 import model.IRequestCallback;
 import model.impl.login.LoginManager;
 import pojo.User;
@@ -20,7 +19,7 @@ import java.io.PrintWriter;
  * 登录Servlet
  * Created by junpeng.wu on 1/6/2017.
  */
-@WebServlet("/servlets/LoginServlet")
+@WebServlet("/servlets/login/LoginServlet")
 public class LoginServlet extends HttpServlet {
     private String message;
 
@@ -55,7 +54,7 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<h1 style=\'text-align:center\'>" + message + "</h1></br>");
         // 处理中文
-//        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
+//        String id = ChineseUtil.adjustMessCode(req.getParameter(base.Constant.USER_ID));
         String id = req.getParameter(Constant.USER_ID);
 //        String name = req.getParameter("username");
         String password = req.getParameter(Constant.USER_PWD);
@@ -69,14 +68,14 @@ public class LoginServlet extends HttpServlet {
 //                out.println(value);
 //                out.println("</p>");
                 ///设置Cookie数据
-//                Cookie userNameCookie = new Cookie(Constant.USER_ID, CookieManager.getInstance().getChineseCookie(id));
-//                Cookie passwordCookie = new Cookie(Constant.USER_PWD, password);
-//                Cookie emailCookie = new Cookie(Constant.USER_PWD, value.getEmail());
-//                Cookie phoneCookie = new Cookie(Constant.USER_PWD, value.getPhone());
-//                Cookie ageCookie = new Cookie(Constant.USER_PWD, value.getAge()+"");
-//                Cookie sexCookie = new Cookie(Constant.USER_PWD, value.getSex()+"");
-//                Cookie userPicCookie = new Cookie(Constant.USER_PIC, value.getUser_pic());
-//                Cookie userIDCookie = new Cookie(Constant.USER_ID, value.getUser_id());
+//                Cookie userNameCookie = new Cookie(base.Constant.USER_ID, CookieManager.getInstance().getChineseCookie(id));
+//                Cookie passwordCookie = new Cookie(base.Constant.USER_PWD, password);
+//                Cookie emailCookie = new Cookie(base.Constant.USER_PWD, value.getEmail());
+//                Cookie phoneCookie = new Cookie(base.Constant.USER_PWD, value.getPhone());
+//                Cookie ageCookie = new Cookie(base.Constant.USER_PWD, value.getAge()+"");
+//                Cookie sexCookie = new Cookie(base.Constant.USER_PWD, value.getSex()+"");
+//                Cookie userPicCookie = new Cookie(base.Constant.USER_PIC, value.getUser_pic());
+//                Cookie userIDCookie = new Cookie(base.Constant.USER_ID, value.getUser_id());
 //
 //                userNameCookie.setMaxAge(10*60);//10min
 //                passwordCookie.setMaxAge(10*60);//10min

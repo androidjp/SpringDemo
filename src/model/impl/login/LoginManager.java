@@ -2,10 +2,9 @@ package model.impl.login;
 
 import model.ILogin;
 import model.RequestManager;
-import model.impl.connection_pool.ConPool;
-import model.impl.connection_pool.MyCon;
+import model.connection_pool.ConPool;
+import model.connection_pool.MyCon;
 import pojo.User;
-import utils.ChineseUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;

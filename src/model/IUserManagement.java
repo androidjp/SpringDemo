@@ -11,7 +11,7 @@ public interface IUserManagement {
     public void updateUserPwd(String userId,String userPwd);
     public void updateEmail(String userId, String email);
     public void updatePhone(String userId, String phone);
-    public void updateUserPic(String userId, File fileName);
+    public void updateUserPic(String userId, String fileName);
     public void updateSex(String userId, int sex);
     public void updateAge(String userId, int age);
     public void execute(String sql);

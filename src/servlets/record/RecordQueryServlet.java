@@ -1,5 +1,7 @@
 package servlets.record;
 
+import pojo.Record;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,12 +30,20 @@ public class RecordQueryServlet extends HttpServlet{
 
 
 
+    private void doHttpResponse(HttpServletRequest req, HttpServletResponse resp){
+
+    }
 
     private void doJsonResponse(HttpServletRequest req, HttpServletResponse resp) {
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json;charset=utf-8");
 
+        ///获取 Attribute
+        Record record = (Record) req.getAttribute("record");
+        if (record != null){
+            System.out.println(record.toString());
+        }
 
     }
 }

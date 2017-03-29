@@ -1,9 +1,7 @@
 package servlets;
 
 import base.Constant;
-import com.sun.tools.internal.jxc.ap.Const;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -47,6 +45,7 @@ public class UploadServlet extends HttpServlet{
         upload.setSizeMax(Constant.MAX_REQUEST_SIZE);//最大请求数
         ///构造临时路径来存储上传的文件
         String uploadPath = req.getServletContext().getRealPath("./") + File.separator + Constant.UPLOAD_DIR;
+        System.out.println("uploadPath= "+ uploadPath);
         File uploadDir = new File(uploadPath);
         ///如果不存在此目录，就自动创建
         if (!uploadDir.exists()){
@@ -65,7 +64,7 @@ public class UploadServlet extends HttpServlet{
                         System.out.println(filePath);
                         ///保存文件到硬盘
                         item.write(storeFile);
-                        req.setAttribute("message", "文件上传成功");
+                        req.setAttribute("message", "文件上传成功，服务端文件实际绝对路径为："+ storeFile.getAbsolutePath());
                     }
                 }
             }
