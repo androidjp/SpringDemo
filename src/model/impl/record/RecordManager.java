@@ -8,10 +8,7 @@ import pojo.Location;
 import pojo.Record;
 import pojo.RecordRes;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,19 +21,7 @@ public class RecordManager extends RequestManager implements IRecordManagement{
     private static boolean isFinishSaveLocation  = false;
     private static boolean isFinishSaveRecordRes = false;
 
-//    private RecordManager(){
-//
-//    }
-//
-//    public static RecordManager getsInstance(){
-//        return SingletonHolder.sInstance;
-//    }
-//
-//    private static class SingletonHolder {
-//        private static final RecordManager sInstance = new RecordManager();
-//    }
-
-
+    private RecordRes mRecordRes = null;
 
     @Override
     public void getRecordHistory(String user_id, int page) {
@@ -95,8 +80,7 @@ public class RecordManager extends RequestManager implements IRecordManagement{
             @Override
             public void finish(RecordRes value) {
                 ///成功计算，现在，保存RecordRes 并把 RecordRes.总赔偿金额 存入Record中
-                RecordRes myRecordRes = value;
-
+                mRecordRes = value;
                 record.pay = value.money_pay;
                 //准备保存record
 
@@ -110,10 +94,8 @@ public class RecordManager extends RequestManager implements IRecordManagement{
                             isFinishSaveLocation = true;
                         else if ("add record_res success".equals(resultStr))
                             isFinishSaveRecordRes = true;
-
                         //保存成功了
                         if (isFinishSaveLocation && isFinishSaveRecordRes)
-                            if (mCallback!=null)
                                 addingRecord(record);
                     }
 
@@ -131,7 +113,6 @@ public class RecordManager extends RequestManager implements IRecordManagement{
                         mCallback.error("record不存在location！！");
                     return;
                 }
-
                 LocationManager locationManager = new LocationManager();
                 locationManager.setRequestCallback(callback);
                 locationManager.addLocation(location.getLocation_id()
@@ -142,6 +123,7 @@ public class RecordManager extends RequestManager implements IRecordManagement{
                 RecordResManager recordResManager = new RecordResManager();
                 recordResManager.setRequestCallback(callback);
                 recordResManager.saveRecordRes(value);
+
             }
 
             @Override
@@ -151,44 +133,27 @@ public class RecordManager extends RequestManager implements IRecordManagement{
             }
         });
         calculateManager.calculateRecord(record);
-
-        //TODO： 后进行数据库存储操作
-//        String sql = "insert into record(" +
-//                "user_id,location_id, record_time" +
-//                ",hurt_level, salary, relatives_count" +
-//                ",has_spouse, id_type, responsibility" +
-//                ",driving_tools, medical_free, hosptial_days" +
-//                ",tardy_days, nutrition_days, nursing_days" +
-//                ",result_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//        try {
-//            PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper")
-//                    .getCon().getConnection().prepareStatement(sql);
-//            preparedStatement.setString(1,user_id);
-//            preparedStatement.setInt(2,page);
-//            preparedStatement.execute();
-//
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
 
 
     private void addingRecord(Record record){
-
-        String saveSQL = "insert into record(record_id,user_id,location_id" +
-                ",record_time, hurt_level,salary,relatives_count,has_spouse" +
-                "id_type,responsibility,driving_tools,medical_free,hospital_days" +
-                ",tardy_days,nutrition_days,nursing_days,result_id,pay) values(" +
-                "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+//        String sql = "insert into location(location_id, city , province, street, latitude, longitude) values(?,?,?,?,?,?)";
+        String sql = "insert into record(record_id,user_id,location_id,record_time" +
+                ",hurt_level,salary,relatives_count,has_spouse" +
+                ",id_type,responsibility,driving_tools,medical_free" +
+                ",hospital_days,tardy_days,nutrition_days,nursing_days" +
+                ",result_id,pay) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = ConPool.getInstance("traffic_helper")
-                    .getCon().getConnection().prepareStatement(saveSQL);
+                    .getCon().getConnection().prepareStatement(sql);
             preparedStatement.setString(1,record.getRecord_id());
             preparedStatement.setString(2,record.getUser_id());
             preparedStatement.setString(3,record.getLocation_id());
-            preparedStatement.setDate(4,new Date(record.record_time));
+//            preparedStatement.setDate(4,new Date(record.record_time));
+//            preparedStatement.setLong(4,record.record_time);
+            preparedStatement.setTimestamp(4 , new Timestamp(record.record_time));
+//            preparedStatement.setDate(4,null);
             preparedStatement.setInt(5,record.hurt_level);
             preparedStatement.setFloat(6,record.salary);
             preparedStatement.setInt(7, record.relatives_count);
@@ -207,7 +172,7 @@ public class RecordManager extends RequestManager implements IRecordManagement{
             preparedStatement.execute();
 
             if (mCallback!=null)
-                mCallback.finish(record);
+                mCallback.finish(mRecordRes);
         } catch (SQLException e) {
             e.printStackTrace();
         }

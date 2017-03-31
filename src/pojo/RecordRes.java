@@ -1,6 +1,9 @@
 package pojo;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.Map;
 
 /**
@@ -57,5 +60,11 @@ public class RecordRes {
                 + money_medical
                 + money_tardy
                 + money_bury;
+    }
+
+    public String toJsonString() {
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(this);
+        return jsonStr;
     }
 }

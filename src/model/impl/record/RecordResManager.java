@@ -60,9 +60,7 @@ public class RecordResManager extends RequestManager{
 
             ///成功插入一个理赔结果数据，然后，将结果
             if (mCallback!=null){
-                RecordRes result = new RecordRes();
-                result.money_pay = recordRes.money_pay;
-                mCallback.finish("insert success");
+                mCallback.finish("add record_res success");
             }
 
         } catch (SQLException e) {

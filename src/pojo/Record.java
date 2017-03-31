@@ -1,5 +1,8 @@
 package pojo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import jp.org.json.JSONException;
 import jp.org.json.JSONObject;
 
 import java.util.List;
@@ -108,27 +111,62 @@ public class Record implements Cloneable {
 
     @Override
     public String toString() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("record_id", record_id);
-        jsonObject.put("user_id", user_id);
-        jsonObject.put("location_id", location_id);
-        jsonObject.put("location", location);
-        jsonObject.put("record_time", record_time);
-        jsonObject.put("hurt_level", hurt_level);
-        jsonObject.put("salary", salary);
-        jsonObject.put("relatives_count", relatives_count);
-        jsonObject.put("has_spouse", has_spouse);
-        jsonObject.put("id_type", id_type);
-        jsonObject.put("responsibility", responsibility);
-        jsonObject.put("driving_tools", driving_tools);
-        jsonObject.put("medical_free", medical_free);
-        jsonObject.put("hospital_days", hospital_days);
-        jsonObject.put("tardy_days", tardy_days);
-        jsonObject.put("nutrition_days", nutrition_days);
-        jsonObject.put("result_id", result_id);
-        jsonObject.put("result", result);
-        jsonObject.put("relative_msg_list", relative_msg_list);
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("record_id", record_id);
+//        jsonObject.put("user_id", user_id);
+//        jsonObject.put("location_id", location_id);
+//        jsonObject.put("location", location);
+//        jsonObject.put("record_time", record_time);
+//        jsonObject.put("hurt_level", hurt_level);
+//        jsonObject.put("salary", salary);
+//        jsonObject.put("relatives_count", relatives_count);
+//        jsonObject.put("has_spouse", has_spouse);
+//        jsonObject.put("id_type", id_type);
+//        jsonObject.put("responsibility", responsibility);
+//        jsonObject.put("driving_tools", driving_tools);
+//        jsonObject.put("medical_free", medical_free);
+//        jsonObject.put("hospital_days", hospital_days);
+//        jsonObject.put("tardy_days", tardy_days);
+//        jsonObject.put("nutrition_days", nutrition_days);
+//        jsonObject.put("result_id", result_id);
+//        jsonObject.put("result", result);
+//        jsonObject.put("relative_msg_list", relative_msg_list);
+//
+//        return jsonObject.toString();
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("record_id", record_id);
+            jsonObject.put("user_id", user_id);
+            jsonObject.put("location_id", location_id);
+            jsonObject.put("location", location);
+            jsonObject.put("record_time", record_time);
+            jsonObject.put("hurt_level", hurt_level);
+            jsonObject.put("salary", salary);
+            jsonObject.put("relatives_count", relatives_count);
+            jsonObject.put("has_spouse", has_spouse);
+            jsonObject.put("id_type", id_type);
+            jsonObject.put("responsibility", responsibility);
+            jsonObject.put("driving_tools", driving_tools);
+            jsonObject.put("medical_free", medical_free);
+            jsonObject.put("hospital_days", hospital_days);
+            jsonObject.put("tardy_days", tardy_days);
+            jsonObject.put("nutrition_days", nutrition_days);
+            jsonObject.put("nursing_days", nursing_days);
+            jsonObject.put("result_id", result_id);
+            jsonObject.put("result", result);
+            jsonObject.put("relative_msg_list", relative_msg_list);
 
-        return jsonObject.toString();
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public String toJsonString() {
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(this);
+        return jsonStr;
     }
 }

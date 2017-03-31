@@ -1,5 +1,8 @@
 package pojo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  * 亲属抚养关系item
  * relation：0：子女 1：父母
@@ -48,4 +51,10 @@ public class RelativeItemMsg {
     }
 
 
+
+    public String toJsonString() {
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(this);
+        return jsonStr;
+    }
 }

@@ -14,21 +14,6 @@ import java.util.concurrent.Executors;
  */
 public class CalculateManager extends RequestManager<RecordRes> implements ICalculate{
 
-
-//    private CalculateManager(){
-//
-//    }
-//
-//    private static final class SingletonHolder{
-//        private static final CalculateManager sInstance = new CalculateManager();
-//    }
-//
-//    public static CalculateManager getInstance(){
-//        return SingletonHolder.sInstance;
-//    }
-    //-----------------------------------------------------------------------------------
-
-
     @Override
     public void calculateRecord(Record record) {
 
@@ -46,7 +31,11 @@ public class CalculateManager extends RequestManager<RecordRes> implements ICalc
         recordRes.money_medical = record.medical_free;
         recordRes.money_nutrition = record.nutrition_days * 50;
         recordRes.money_hospital_allowance = record.hospital_days * 100;
+        ///如果有需抚养人，则需要根据抚养人的各自岁数进行分析
+//        recordRes.money_relatives =
         recordRes.calculateAllPay();
+        ///特殊情况一一分析：
+        //1. 如果"死亡":
 
         ///计算完毕，需要返回RecordRes，并将总赔偿金额给到record表中
         if (mCallback!=null){
