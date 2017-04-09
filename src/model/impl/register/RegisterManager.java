@@ -14,17 +14,17 @@ import java.sql.SQLException;
  * Created by junpeng.wu on 1/9/2017.
  */
 public class RegisterManager extends RequestManager<String> implements IRegister{
-    private RegisterManager(){
-
-    }
-
-    private static final class SingletonHolder{
-        private static final RegisterManager sInstance = new RegisterManager();
-    }
-
-    public static RegisterManager getInstance(){
-        return RegisterManager.SingletonHolder.sInstance;
-    }
+//    private RegisterManager(){
+//
+//    }
+//
+//    private static final class SingletonHolder{
+//        private static final RegisterManager sInstance = new RegisterManager();
+//    }
+//
+//    public static RegisterManager getInstance(){
+//        return RegisterManager.SingletonHolder.sInstance;
+//    }
 
     @Override
     public void register(String user_name, String user_pwd,String email,String phone, int age, int sex) {

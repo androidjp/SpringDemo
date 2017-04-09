@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 @WebServlet("/servlets/login/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 
+    private RegisterManager registerManager = new RegisterManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,7 +54,8 @@ public class RegisterServlet extends HttpServlet {
 
         System.out.println("注册时，获取user_name，计算其长度：" + req.getParameter(Constant.USER_NAME).getBytes().length);
 
-        String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
+//        String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
+        String user_name = req.getParameter(Constant.USER_NAME);
         System.out.println("将user_name转utf-8后，计算器长度：" + user_name.getBytes().length);
 
 //        String user_name = req.getParameter(base.Constant.USER_NAME);
@@ -90,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
         out.println(sb.toString());
 
         //设置注册回调事件
-        RegisterManager.getInstance().setRequestCallback(new IRequestCallback<String>() {
+        this.registerManager.setRequestCallback(new IRequestCallback<String>() {
 
             @Override
             public void finish(String value) {
@@ -108,7 +110,7 @@ public class RegisterServlet extends HttpServlet {
         });
         ///开始注册
         System.out.println("准备RegisterManager进行注册。。");
-        RegisterManager.getInstance().register(user_name, user_pwd, email, phone, age, sex);
+        this.registerManager.register(user_name, user_pwd, email, phone, age, sex);
     }
 
     /**
@@ -119,9 +121,10 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException
      */
     private void doJsonResponse(HttpServletRequest req, HttpServletResponse resp) {
-        String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
-        if (user_name != null)
-            System.out.println("将user_name转utf-8后，计算器长度：" + user_name.getBytes().length);
+//        String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
+        String user_name = req.getParameter(Constant.USER_NAME);
+//        if (user_name != null)
+//            System.out.println("将user_name转utf-8后，计算器长度：" + user_name.getBytes().length);
 
 
         String user_pwd = req.getParameter(Constant.USER_PWD);
@@ -144,7 +147,7 @@ public class RegisterServlet extends HttpServlet {
         System.out.println("在写入MySQL之前，phone 是否存在：" + phone);
 
         //设置注册回调事件
-        RegisterManager.getInstance().setRequestCallback(new IRequestCallback<String>() {
+        this.registerManager.setRequestCallback(new IRequestCallback<String>() {
             @Override
             public void finish(String value) {
                 resp.setCharacterEncoding("UTF-8");
@@ -195,7 +198,7 @@ public class RegisterServlet extends HttpServlet {
             }
         });
         ///开始注册
-        RegisterManager.getInstance().register(user_name, user_pwd, email, phone, age, sex);
+        this.registerManager.register(user_name, user_pwd, email, phone, age, sex);
 
     }
 }

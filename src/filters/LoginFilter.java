@@ -15,8 +15,8 @@ public class LoginFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        String site = ChineseUtil.adjustMessCode(filterConfig.getInitParameter("Site"));
-        System.out.println("Site："+site);
+//        String site = ChineseUtil.adjustMessCode(filterConfig.getInitParameter("Site"));
+//        System.out.println("Site："+site);
     }
 
     @Override

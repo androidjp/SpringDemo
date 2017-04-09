@@ -38,13 +38,14 @@ public class Constant {
     public static final String HOSPITAL_DAYS = "hospital_days";
     public static final String NUTRITION_DAYS = "nutrition_days";
     public static final String NURSING_DAYS = "nursing_days";
+    public static final String TARDY_DAYS = "tardy_days";
     public static final String PAY = "pay";
 
 
 
     ///需抚养人信息
     public static final String RELATIVE_ITEM_MSG_ID = "relative_item_msg_id";
-    public static final String RELATIVE = "relative";
+    public static final String RELATION = "relation";
 
 
     //location 信息
@@ -52,12 +53,11 @@ public class Constant {
     public static final String PROVINCE = "province";
     public static final String STREET = "street";
     public static final String LOCATION_ID = "location_id";
-    public static final String LATITUDE = "latitdue";
+    public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
 
     //RecordRes信息
     public static final String PAGE  = "page";
-    public static final String FIRST_RECORD_ID  = "first_record_id";
     public static final String RESULT_ID = "result_id";
     public static final String MONEY_PAY = "money_pay";
     public static final String MONEY_HURT = "money_hurt";
@@ -68,6 +68,7 @@ public class Constant {
     public static final String MONEY_NUTRITION = "money_nutrition";
     public static final String MONEY_HOSPITAL_ALLOWANCE = "money_hospital_allowance";
     public static final String MONEY_RELATIVES = "money_relatives";
+    public static final String MONEY_BURY = "money_bury";
     public static final String MONEY_HURT_INFO = "money_hurt_info";
     public static final String MONEY_HEART_INFO = "money_heart_info";
     public static final String MONEY_NURSING_INFO = "money_nursing_info";
@@ -78,6 +79,8 @@ public class Constant {
     public static final String MONEY_RELATIVES_INFO = "money_relatives_info";
     public static final String MONEY_BURY_INFO = "money_bury_info";
 
+    public static final int RELATION_CHILDREN = 0;
+    public static final int RELATION_PARENTS = 1;
 
     public static boolean isEmpty(String value){
         return value==null || value.length()==0;

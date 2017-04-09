@@ -8,8 +8,12 @@ import pojo.Record;
  */
 public interface IRecordManagement {
 
-    /// 获取第page页的理赔历史记录
-     void getRecordHistory(String user_id , int page);
-     /// 添加一条理赔记录（相当于请求，计算出结果，并同时保存和返回数据）
-     void addRecord(Record record);
+    /// 下拉刷新
+    void getRefreshList(String user_id, long record_time);
+
+    /// 上拉加载更多
+    void getMoreList(String user_id, long record_time);
+
+    /// 添加一条理赔记录（相当于请求，计算出结果，并同时保存和返回数据）
+    void addRecord(Record record);
 }

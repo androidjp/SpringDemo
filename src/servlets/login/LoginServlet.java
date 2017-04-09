@@ -128,7 +128,8 @@ public class LoginServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json;charset=utf-8");
 
-        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
+//        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
+        String id = req.getParameter(Constant.USER_ID);
         String password = req.getParameter(Constant.USER_PWD);
         System.out.println("id 和 password分别为："+ id+","+password);
         LoginManager.getInstance().setRequestCallback(new IRequestCallback<User>() {

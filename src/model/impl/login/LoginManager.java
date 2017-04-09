@@ -43,11 +43,12 @@ public class LoginManager extends RequestManager<User> implements ILogin{
                 //TODO: 构建JSON串并返回
                 User user = new User();
                 user.setUser_id(result.getString("user_id"));
-                try {
-                    user.setUser_name(new String(result.getString("user_name").getBytes("utf-8")));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    user.setUser_name(new String(result.getString("user_name").getBytes("utf-8")));
+                    user.setUser_name(result.getString("user_name"));
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
                 System.out.println("登录成功时：从MySQL中获取的user_name : "+result.getString("user_name")+" , 长度："+result.getString("user_name").getBytes().length);
                 System.out.println("登录成功时： 给到User对象赋值的user_name : "+ user.getUser_id().getBytes().length);
 

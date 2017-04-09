@@ -4,6 +4,7 @@ import model.ILocation;
 import model.RequestManager;
 import model.connection_pool.ConPool;
 import pojo.Location;
+import utils.ChineseUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +38,9 @@ public class LocationManager extends RequestManager implements ILocation {
                     .getConnection()
                     .prepareStatement(sql);
             preparedStatement.setString(1, location_id);
+//            preparedStatement.setString(2, ChineseUtil.toUTF8(city));
+//            preparedStatement.setString(3, ChineseUtil.toUTF8(province));
+//            preparedStatement.setString(4, ChineseUtil.toUTF8(street));
             preparedStatement.setString(2, city);
             preparedStatement.setString(3, province);
             preparedStatement.setString(4, street);
@@ -56,7 +60,7 @@ public class LocationManager extends RequestManager implements ILocation {
     }
 
     @Override
-    public void getLocation(String location_id) {
+    public Location getLocation(String location_id) {
         String sql = "select * from location where location_id=?";
         PreparedStatement preparedStatement = null;
         try {
@@ -69,6 +73,9 @@ public class LocationManager extends RequestManager implements ILocation {
             if (resultSet.next()) {
                 Location location = new Location();
                 location.setLocation_id(resultSet.getString("location_id"));
+//                location.city = ChineseUtil.adjustMessCode(resultSet.getString("city"));
+//                location.province = ChineseUtil.adjustMessCode(resultSet.getString("province"));
+//                location.street = ChineseUtil.adjustMessCode(resultSet.getString("street"));
                 location.city = resultSet.getString("city");
                 location.province = resultSet.getString("province");
                 location.street = resultSet.getString("street");
@@ -77,6 +84,7 @@ public class LocationManager extends RequestManager implements ILocation {
                 if (mCallback != null) {
                     mCallback.finish(location);
                 }
+                return location;
             }
 
         } catch (SQLException e) {
@@ -88,6 +96,8 @@ public class LocationManager extends RequestManager implements ILocation {
                 e1.printStackTrace();
             }
             e.printStackTrace();
+            return null;
         }
+        return null;
     }
 }

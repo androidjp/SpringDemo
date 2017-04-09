@@ -1,5 +1,6 @@
 package model.impl.record;
 
+import base.Constant;
 import model.RequestManager;
 import model.connection_pool.ConPool;
 import pojo.RecordRes;
@@ -77,35 +78,36 @@ public class RecordResManager extends RequestManager{
      * @param resultID 理赔结果ID
      */
     public void getRecordRes(String resultID){
+        String sql = "select * from record_res where result_id=?";
+
         try {
-            PreparedStatement preparedStatemen  = ConPool.getInstance("traffic_helper")
-                    .getCon().getConnection().prepareCall(getResultSQL);
+            PreparedStatement preparedStatement  = ConPool.getInstance("traffic_helper")
+                    .getCon().getConnection().prepareStatement(sql);
+            preparedStatement.setString(1, resultID);
 
-            preparedStatemen.setString(1, resultID);
-
-            ResultSet resultSet = preparedStatemen.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
                 RecordRes result = new RecordRes();
-                result.setResult_id(resultSet.getString("result_id"));
-                result.money_pay = resultSet.getFloat("money_pay");
-                result.money_hurt = resultSet.getFloat("money_hurt");
-                result.money_heart = resultSet.getFloat("money_heart");
-                result.money_nursing = resultSet.getFloat("money_nursing");
-                result.money_tardy = resultSet.getFloat("money_tardy");
-                result.money_medical = resultSet.getFloat("money_medical");
-                result.money_nutrition = resultSet.getFloat("money_nutrition");
-                result.money_hospital_allowance = resultSet.getFloat("money_hospital_allowance");
-                result.money_relatives = resultSet.getFloat("money_relatives");
-                result.money_bury = resultSet.getFloat("money_bury");
-                result.money_hurt_info = resultSet.getString("money_hurt_info");
-                result.money_heart_info = resultSet.getString("money_heart_info");
-                result.money_nursing_info = resultSet.getString("money_nursing_info");
-                result.money_nutrition_info = resultSet.getString("money_nutrition_info");
-                result.money_tardy_info = resultSet.getString("money_tardy_info");
-                result.money_medical_info = resultSet.getString("money_medical_info");
-                result.money_hospital_allowance_info = resultSet.getString("money_hospital_info");
-                result.money_relatives_info = resultSet.getString("money_relatives_info");
-                result.money_bury_info = resultSet.getString("money_bury_info");
+                result.setResult_id(resultSet.getString(Constant.RESULT_ID));
+                result.money_pay = resultSet.getFloat(Constant.MONEY_PAY);
+                result.money_hurt = resultSet.getFloat(Constant.MONEY_HURT);
+                result.money_heart = resultSet.getFloat(Constant.MONEY_HEART);
+                result.money_nursing = resultSet.getFloat(Constant.MONEY_NURSING);
+                result.money_tardy = resultSet.getFloat(Constant.MONEY_TARDY);
+                result.money_medical = resultSet.getFloat(Constant.MONEY_MEDICAL);
+                result.money_nutrition = resultSet.getFloat(Constant.MONEY_NUTRITION);
+                result.money_hospital_allowance = resultSet.getFloat(Constant.MONEY_HOSPITAL_ALLOWANCE);
+                result.money_relatives = resultSet.getFloat(Constant.MONEY_RELATIVES);
+                result.money_bury = resultSet.getFloat(Constant.MONEY_BURY);
+                result.money_hurt_info = resultSet.getString(Constant.MONEY_HURT_INFO);
+                result.money_heart_info = resultSet.getString(Constant.MONEY_HEART_INFO);
+                result.money_nursing_info = resultSet.getString(Constant.MONEY_NURSING_INFO);
+                result.money_nutrition_info = resultSet.getString(Constant.MONEY_NUTRITION_INFO);
+                result.money_tardy_info = resultSet.getString(Constant.MONEY_TARDY_INFO);
+                result.money_medical_info = resultSet.getString(Constant.MONEY_MEDICAL_INFO);
+                result.money_hospital_allowance_info = resultSet.getString(Constant.MONEY_HOSPITAL_ALLOWANCE_INFO);
+                result.money_relatives_info = resultSet.getString(Constant.MONEY_RELATIVES_INFO);
+                result.money_bury_info = resultSet.getString(Constant.MONEY_BURY_INFO);
 
                 if (mCallback!=null)
                     mCallback.finish(result);
