@@ -8,6 +8,7 @@ import pojo.network.Result;
 import utils.ChineseUtil;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class UserServlet extends HttpServlet {
     private void doAndroidRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-
+        req.setCharacterEncoding("utf-8");
         String user_id = req.getParameter(Constant.USER_ID);
         String user_name = req.getParameter(Constant.USER_NAME);
         String user_pwd = req.getParameter(Constant.USER_PWD);
@@ -44,14 +45,20 @@ public class UserServlet extends HttpServlet {
         StringBuilder sb = new StringBuilder();
         sb.append(user_id).append(" , \r\n")
                 .append(user_name).append(" , \r\n")
+//                .append(ChineseUtil.convertStringToUTF8(user_name)).append(", \r\n")
+//                .append(ChineseUtil.convertUTF8ToString(user_name)).append(", \r\n")
                 .append(user_pwd).append(" , \r\n")
                 .append(email).append(" , \r\n")
                 .append(phone).append(" , \r\n")
                 .append(sex).append(" , \r\n")
                 .append(age).append(" , \r\n");
 
-        System.out.println(sb.toString());
-        System.out.println(user_id == null);
+//        out.println(sb.toString());
+//        out.flush();
+//        out.close();
+//        System.out.println(user_id == null);
+//
+//        return;
 
         userManager.setRequestCallback(new IRequestCallback<User>() {
             @Override

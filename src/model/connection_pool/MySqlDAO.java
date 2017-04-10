@@ -16,7 +16,7 @@ public class MySqlDAO {
      */
     public static Connection getConnection() throws Exception{
         String driverName="com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/"+(database==null?"":database);///连接协议 + 数据库地址+ 数据库名称
+        String url = "jdbc:mysql://localhost:3306/"+(database==null?"":database)+"?useUnicode=true&characterEncoding=UTF-8";///连接协议 + 数据库地址+ 数据库名称
         System.out.println(url);
         String user = "root";
         String password="root";

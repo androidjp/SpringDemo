@@ -55,7 +55,8 @@ public class RecordAddServlet extends HttpServlet {
                 sb.append(new String(buffer, 0, len));
             }
             jsonStr = sb.toString();
-            System.out.println(jsonStr);
+//            System.out.println(jsonStr);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
