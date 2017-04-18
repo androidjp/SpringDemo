@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 @WebServlet("/servlets/login/LoginServlet")
 public class LoginServlet extends HttpServlet {
     private String message;
+    private Result<User> result = new Result<>();
+
 
     @Override
     public void init() throws ServletException {
@@ -97,13 +99,12 @@ public class LoginServlet extends HttpServlet {
 
                 req.setAttribute("user", value);
                 try {
-                    req.getRequestDispatcher("../user.jsp").forward(req,resp);
+                    req.getRequestDispatcher("../user.jsp").forward(req, resp);
                 } catch (ServletException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
 
                 ///TODO: 准备重定向
@@ -124,43 +125,47 @@ public class LoginServlet extends HttpServlet {
         LoginManager.getInstance().login(id, password);
     }
 
-    private void getJsonResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+    private void getJsonResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json;charset=utf-8");
+
+        PrintWriter out = resp.getWriter();
 
 //        String id = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_ID));
         String id = req.getParameter(Constant.USER_ID);
         String password = req.getParameter(Constant.USER_PWD);
-        System.out.println("id 和 password分别为："+ id+","+password);
+        System.out.println("id 和 password分别为：" + id + "," + password);
         LoginManager.getInstance().setRequestCallback(new IRequestCallback<User>() {
             @Override
             public void finish(User value) {
-                if (value!=null){
-                    System.out.println("登录成功，获得的User信息："+value.toJsonString());
+                if (value != null) {
+                    System.out.println("登录成功，获得的User信息：" + value.toJsonString());
                     Result<User> result = new Result<>();
                     result.code = 200;
                     result.msg = "success";
                     result.data = value;
                     System.out.println(result.toJsonString());
 
-                    try {
-                        PrintWriter out = resp.getWriter();
-                        out.print(result.toJsonString());
-//                        out.print(value.toJsonString());
-                        out.flush();
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    out.print(result.toJsonString());
+                    out.flush();
+                    out.close();
                 }
             }
 
             @Override
             public void error(String msg) {
-                System.err.println(msg);
+
+                Result<User> result = new Result<>();
+                result.code = 500;
+                result.msg = msg;
+                result.data = null;
+                out.print(result.toJsonString());
+                out.flush();
+                out.close();
             }
         });
-        LoginManager.getInstance().login(id,password);
+        LoginManager.getInstance().login(id, password);
     }
 
 }

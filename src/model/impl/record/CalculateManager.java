@@ -97,16 +97,21 @@ public class CalculateManager extends RequestManager<RecordRes> implements ICalc
             recordRes.money_bury_info = "所属地区：" + record.getLocation().province + "，在职人员平均月薪为：" + provinceSalary + "，赔偿金额按6个月算";
         //精神抚慰金(由于各省各种情况，这里设定一个平均值，5000元)
         recordRes.money_heart = (float) (5000 * 6.00);
+        recordRes.money_heart_info = "各省情况不同，这个设定一个平均值为5000元，5000元每个月，按六个月算。";
         //护理费
         recordRes.money_nursing = record.nursing_days * 60;
+        recordRes.money_nursing_info = "护理期为"+record.nursing_days+"天，护理费用标准为60元/天。";
         ///误工费
         recordRes.money_tardy = record.tardy_days * record.salary;
+        recordRes.money_tardy_info = "误工费用 = 误工天数 x 您的平均工资 = "+record.tardy_days +"x"+ record.salary+"。";
         ///医药费
         recordRes.money_medical = record.medical_free;
         ///营养费
         recordRes.money_nutrition = record.nutrition_days * 50;
+        recordRes.money_nutrition_info = "营养期为"+record.nursing_days+"天，日均营养费用标准为50元/天。";
         ///住院补贴
         recordRes.money_hospital_allowance = record.hospital_days * 100;
+        recordRes.money_hospital_allowance_info = "住院天数为"+record.hospital_days+"天，日均住院补贴标准为100元/天。";
         ///如果有需抚养人，则需要根据抚养人的各自岁数进行分析
         ///死亡赔偿金计算
         if (record.hurt_level == 11 && record.getRelative_msg_list() != null) {

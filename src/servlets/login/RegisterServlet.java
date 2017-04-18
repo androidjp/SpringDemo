@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 public class RegisterServlet extends HttpServlet {
 
     private RegisterManager registerManager = new RegisterManager();
+    private Result<String> result = new Result<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -121,12 +122,13 @@ public class RegisterServlet extends HttpServlet {
      * @param resp 响应
      * @throws IOException
      */
-    private void doJsonResponse(HttpServletRequest req, HttpServletResponse resp) {
-//        String user_name = ChineseUtil.adjustMessCode(req.getParameter(Constant.USER_NAME));
-        String user_name = req.getParameter(Constant.USER_NAME);
-//        if (user_name != null)
-//            System.out.println("将user_name转utf-8后，计算器长度：" + user_name.getBytes().length);
+    private void doJsonResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=utf-8");
+        PrintWriter out = resp.getWriter();
 
+        String user_name = req.getParameter(Constant.USER_NAME);
 
         String user_pwd = req.getParameter(Constant.USER_PWD);
         String email = req.getParameter(Constant.EMAIL);
@@ -151,51 +153,23 @@ public class RegisterServlet extends HttpServlet {
         this.registerManager.setRequestCallback(new IRequestCallback<String>() {
             @Override
             public void finish(String value) {
-                resp.setCharacterEncoding("UTF-8");
-                resp.setContentType("application/json; charset=utf-8");
-                PrintWriter out = null;
-                Result<String> result = new Result<>();
+
                 result.code = 200;
                 result.msg = "success";
                 result.data = value;
-                try {
-                    out = resp.getWriter();
-//                    out.append(responseJSONObject.toString());
-                    System.out.println("注册成功，返回的json数据为：" + result.toJsonString());
-                    out.print(result.toJsonString());
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (out != null)
-                        out.close();
-                }
+                out.print(result.toJsonString());
+                out.flush();
+                out.close();
             }
 
             @Override
             public void error(String msg) {
-                System.err.println(msg);
-                resp.setCharacterEncoding("UTF-8");
-                resp.setContentType("application/json; charset=utf-8");
-                PrintWriter out = null;
-                Result<String> result = new Result<>();
                 result.code = 400;
                 result.msg = "fail";
                 result.data = msg;
-                try {
-                    out = resp.getWriter();
-//                    out.append(responseJSONObject.toString());
-                    System.out.println("注册成功，返回的json数据为：" + result.toJsonString());
-                    out.print(result.toJsonString());
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (out != null)
-                        out.close();
-                }
+                out.print(result.toJsonString());
+                out.flush();
+                out.close();
             }
         });
         ///开始注册

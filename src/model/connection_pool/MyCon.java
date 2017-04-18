@@ -3,6 +3,7 @@ package model.connection_pool;
 import java.sql.Connection;
 
 /**
+ * 我的数据库连接管理类（管理每一个连接，包括管理连接状态等）
  * Created by androidjp on 2016/11/16.
  */
 public class MyCon {
